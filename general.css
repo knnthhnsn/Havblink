@@ -1,0 +1,628 @@
+/* css/style.css */
+
+/* ===== Grundlæggende Nulstilling & Variabler ===== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --font-heading: 'Merriweather', serif;
+    --font-body: 'Open Sans', sans-serif;
+
+    /* Dannebrog & Hav Farvepalette */
+    --color-dannebrog-red: #C60C30;       /* Klassisk Dannebrog rød (accent) */
+    --color-dannebrog-white: #FFFFFF;     /* Ren hvid (primær baggrund/overflade) */
+
+    --color-hav-blue-deep: #003B5C;    /* Dyb, dæmpet marineblå (overskrifter, footer) */
+    --color-hav-blue-light: #A0D2DB;   /* Lys, luftig himmel/havblå (subtile baggrunde, highlights) */
+    --color-sand-beige: #EADCA6;       /* Varm, sandfarvet beige (sekundær accent, kort-baggrund) */
+    
+    --color-text-primary: #212529;     /* Mørk grå/sort til primær tekst for læsbarhed */
+    --color-text-secondary: #495057;   /* Lidt lysere grå til sekundær tekst */
+    --color-text-on-dark: #F8F9FA;     /* Lys tekst til mørke baggrunde (f.eks. footer) */
+    
+    --color-border: #DEE2E6;           /* Lys grå til kanter */
+
+    --shadow-light: 0 2px 5px rgba(0,0,0,0.07);
+    --shadow-medium: 0 4px 10px rgba(0,0,0,0.1);
+    --border-radius: 5px;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-body);
+    line-height: 1.65; /* Lidt øget linjehøjde for bedre læsbarhed */
+    color: var(--color-text-primary);
+    background-color: var(--color-dannebrog-white); /* Primært hvid baggrund */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--border-radius);
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-hav-blue-deep); /* Marineblå links */
+    transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+    color: var(--color-dannebrog-red); /* Rød ved hover på links for accent */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--color-hav-blue-deep); /* Marineblå overskrifter */
+    margin-bottom: 0.9em;
+    line-height: 1.25;
+}
+
+h1 { font-size: clamp(2.1rem, 5vw, 2.8rem); }
+h2 { font-size: clamp(1.7rem, 4vw, 2.3rem); }
+h3 { font-size: clamp(1.3rem, 3vw, 1.8rem); }
+
+p {
+    margin-bottom: 1em;
+}
+
+.container {
+    width: 90%;
+    max-width: 1160px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px 0; /* Reduceret lidt for at give sektioner mere kontrol */
+}
+
+/* ===== Hoved Header & Navigation ===== */
+.site-header {
+    background-color: var(--color-dannebrog-red);
+    padding: 0.2rem;
+    box-shadow: var(--shadow-light);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 3px solid rgba(0,0,0,0.5); /* Rød accentlinje */
+}
+
+.site-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex; /* Gør .logo til en flex-container */
+    align-items: center; /* Justerer billedet og teksten lodret til midten */
+    gap: 1px; /*Tilføjer plads mellem billedet og teksten. Juster efter behov. */
+  
+    /* Dine eksisterende styles */
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: 200;
+    color: var(--color-sand-beige);
+  
+    /* Det er også god praksis for links at opføre sig forudsigeligt med flex */
+    text-decoration: none; /* Forudsat at du håndterer link-styling andre steder eller ønsker standard */
+  }
+  
+  .logo img {
+    width: 30px;
+    height: auto;
+    /* display: block;  Fjern dette, hvis du tidligere har tilføjet det, da flex håndterer det. */
+  }
+  
+  /* Valgfrit: Hvis selve linket skal være inline-block for at indeholde flex-elementerne korrekt */
+  .logo-link {
+    display: inline-block; /* Sikrer, at anker-taggets dimensioner passer til dets indhold */
+  }
+
+.site-nav ul {
+    list-style: none;
+    display: flex;
+}
+
+.site-nav li {
+    margin-left: 22px;
+}
+
+.site-nav a {
+    font-weight: 600;
+    padding: 0.5em 1em;
+    border-radius: var(--border-radius);
+    transition: background-color 0.2s ease, color 0.2s ease;
+    color: var(--color-dannebrog-white);
+    position: relative; /* For accent-streg */
+}
+.site-nav a::after { /* Understregningseffekt ved hover */
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--color-hav-blue-light);
+    transition: width 0.3s ease;
+}
+
+.site-nav a:hover::after,
+.site-nav a.active::after {
+    width: 70%; /* Eller 100% hvis ønsket */
+}
+.site-nav a.active {
+    color: var(--color-hav-blue-light); /* Rød for aktivt link */
+}
+
+
+/* Burger menu til mobil */
+.burger-menu {
+    display: none;
+    font-size: 2.1rem;
+    background: none;
+    border: none;
+    color: var(--color-dannebrog-white);
+    cursor: pointer;
+}
+
+/* ===== Generelle Sektions Styles ===== */
+main {
+    flex-grow: 1;
+}
+
+section {
+    padding: 60px 20px; /* Mere padding for luft */
+}
+
+section.alternate-bg { /* Klasse til sektioner med alternativ baggrund */
+    background-color: var(--color-hav-blue-light, #EFF6F7); /* Meget lys blå/grå */
+}
+
+
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+.section-title::after {
+    content: '';
+    display: block;
+    width: 70px;
+    height: 3px;
+    background-color: var(--color-dannebrog-red); /* Rød linje */
+    margin: 12px auto 0;
+    border-radius: 2px;
+}
+
+/* ===== Knapper ===== */
+.btn {
+    display: inline-block;
+    background-color: var(--color-dannebrog-red); /* Rød primær knap */
+    color: var(--color-dannebrog-white);
+    padding: 13px 28px;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: var(--shadow-light);
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: #A80A27; /* Mørkere rød ved hover */
+    color: var(--color-dannebrog-white);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+.btn-secondary {
+    background-color: var(--color-hav-blue-deep); /* Marineblå sekundær knap */
+    color: var(--color-dannebrog-white);
+}
+.btn-secondary:hover {
+    background-color: #002A45; /* Mørkere marineblå */
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--color-hav-blue-deep);
+    border: 2px solid var(--color-hav-blue-deep);
+}
+.btn-outline:hover {
+    background-color: var(--color-hav-blue-deep);
+    color: var(--color-dannebrog-white);
+}
+
+
+/* ===== Hero Sektion (Forside) ===== */
+.hero {
+    color: var(--color-dannebrog-white);
+    text-align: center;
+    padding: clamp(50px, 20vh, 150px) 20px;
+    background-size: cover;
+    background-position: center center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Lidt lavere for at vise header-accent */
+    position: relative;
+}
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 59, 92, 0.65); /* Marineblå overlay */
+    z-index: 1;
+}
+.hero .container { /* Containeren skal være relativ for z-index */
+    position: relative;
+    z-index: 2;
+}
+
+.hero h1 {
+    font-size: clamp(2.3rem, 6vw, 3.5rem);
+    margin-bottom: 20px;
+    color: var(--color-dannebrog-white);
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+}
+
+.hero p {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    margin-bottom: 30px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 300;
+}
+
+/* ===== Kort (til vine, team medlemmer etc.) ===== */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); /* Lidt mindre min-bredde for flere kort */
+    gap: 30px;
+}
+
+.card {
+    background-color: var(--color-dannebrog-white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-medium);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
+    border: 1px solid var(--color-border);
+}
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+}
+
+.card img {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+    /* Ingen ekstra border på billedet, da kortet har border */
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.card-content {
+    padding: 20px 25px 25px; /* Lidt mere padding i bunden */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-content h3 {
+    margin-top: 0;
+    color: var(--color-hav-blue-deep);
+    margin-bottom: 12px; /* Lidt mere plads under H3 */
+}
+
+.card-content p {
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    flex-grow: 1; /* Gør at p tager plads før knappen */
+}
+
+.card-content .btn {
+    margin-top: 15px; /* Auto margin vil også virke hvis p har flex-grow */
+    align-self: flex-start;
+}
+
+.card-content .text-center-mobile {
+    display: flex;             /* Gør denne div til en flex-container */
+    flex-direction: column;    /* Dens børn (h3, p, btn) stables lodret */
+    flex-grow: 1;              /* VIGTIGT: Får .text-center-mobile til at fylde .card-content */
+    /* Hvis .text-center-mobile klassen også skal centrere tekst på mobil: */
+    /* text-align: left; /* Standard for desktop */
+    /* @media (max-width: DIT_MOBILE_BREAKPOINT) { */
+    /* text-align: center; */
+    /* } */
+}
+
+.card-content .text-center-mobile h3 {
+    margin-top: 0;
+    color: var(--color-hav-blue-deep);
+    margin-bottom: 12px;
+    /* Hvis du har text-align: center på .text-center-mobile, vil denne tekst også centreres */
+}
+
+.card-content .text-center-mobile p {
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    flex-grow: 1; /* VIGTIGT: Nu vil p vokse INDENFOR .text-center-mobile og skubbe knappen ned */
+    /* Hvis du har text-align: center på .text-center-mobile, vil denne tekst også centreres */
+}
+
+.card-content .text-center-mobile .btn {
+    margin-top: 15px;
+    align-self: flex-start; /* Justerer knappen til venstre. Skift til 'center' for horisontal centrering. */
+                             /* Hvis .text-center-mobile har text-align: center, og knappen er inline-block, */
+                             /* vil den også blive centreret. align-self: center; er mere eksplicit for flex items. */
+}
+
+/* Specifikke Vinkort styles */
+.vin-kort .pris {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-hav-blue-deep);
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+
+/* ===== Kontaktformular ===== */
+.contact-form {
+    background-color: var(--color-dannebrog-white);
+    padding: 30px 35px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-medium);
+    max-width: 600px;
+    margin: 0 auto;
+    border: 1px solid var(--color-border);
+}
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--color-hav-blue-deep);
+    font-size: 0.9rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-family: var(--font-body);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-hav-blue-deep);
+    box-shadow: 0 0 0 3px rgba(0, 59, 92, 0.15);
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* ===== FAQ Sektion ===== */
+.faq-item {
+    margin-bottom: 12px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    background-color: var(--color-dannebrog-white);
+}
+.faq-item summary {
+    font-weight: 600;
+    cursor: pointer;
+    padding: 16px 20px;
+    list-style: none;
+    color: var(--color-hav-blue-deep);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s ease;
+}
+.faq-item summary:hover {
+    background-color: var(--color-hav-blue-light, #F0F8FF); /* Meget lys blå hover */
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+
+.faq-item summary::after {
+    content: '+';
+    font-size: 1.5rem;
+    color: var(--color-hav-blue-deep);
+    transition: transform 0.2s ease-in-out;
+}
+.faq-item[open] summary::after {
+    content: '−'; /* Minus */
+}
+.faq-item[open] summary {
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-hav-blue-light, #F0F8FF);
+}
+
+.faq-item p {
+    padding: 16px 20px;
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+}
+
+/* ===== Footer ===== */
+.site-footer {
+    background-color: var(--color-hav-blue-deep);
+    color: var(--color-text-on-dark);
+    padding: 50px 0 20px 0;
+    margin-top: auto;
+}
+
+.site-footer .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 30px 25px; /* Forskellig gap for række og kolonne */
+    padding-bottom: 25px;
+}
+
+.footer-column h4 {
+    color: var(--color-sand-beige); /* Sandfarve til footer overskrifter */
+    margin-bottom: 15px;
+    font-size: 1.15rem;
+}
+
+.footer-column ul {
+    list-style: none;
+}
+
+.footer-column li {
+    margin-bottom: 8px;
+}
+
+.footer-column a {
+    color: var(--color-text-on-dark);
+}
+.footer-column a:hover {
+    color: var(--color-sand-beige);
+    text-decoration: underline;
+}
+
+.footer-social-icons a {
+    margin-right: 10px;
+    font-size: 1.5rem;
+}
+.footer-social-icons a:last-child { margin-right: 0; }
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 25px;
+    border-top: 1px solid #002A45; /* Mørkere skillelinje */
+    font-size: 0.85rem;
+}
+.footer-bottom a {
+    color: var(--color-hav-blue-light);
+}
+.footer-bottom a:hover {
+    color: var(--color-sand-beige);
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 768px) {
+    .logo { font-size: 1.5rem; }
+
+    .site-nav {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        background-color: var(--color-dannebrog-red);
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        transition: left 0.3s ease-in-out;
+        box-shadow: 3px 0 10px rgba(0,0,0,0.1);
+        z-index: 11;
+        padding-top: 60px; /* Juster efter header højde */
+        border-right: 2px solid var(--color-text-primary);
+    }
+
+    .site-nav.active { left: 0; }
+
+    .site-nav ul { flex-direction: column; width: 100%; }
+    .site-nav li { margin: 0; width: 100%; }
+    .site-nav a {
+        display: block;
+        padding: 16px 20px;
+        font-size: 1.05rem;
+        text-align: right;
+        border-radius: 0;
+        
+    }
+    .site-nav a::after { display: none; } /* Fjern hover-streg i mobilmenu */
+    .site-nav a:hover, .site-nav a.active {
+        background-color: var(--color-sand-beige, #F0F8FF);
+        color: var(--color-hav-blue-deep);
+    }
+     .site-nav a.active {
+        color: var(--color-dannebrog-red); /* Aktivt link stadig rødt */
+        font-weight: bold;
+    }
+
+
+    .burger-menu { display: block; z-index: 1200; }
+
+    .hero h1 { font-size: clamp(2rem, 7vw, 2.8rem); }
+    .hero p { font-size: clamp(0.95rem, 4vw, 1.1rem); }
+
+    .text-center-mobile {
+        text-align: center;
+      }
+
+      .card-content .text-center-mobile {
+        display: flex;             /* Gør denne div til en flex-container */
+        flex-direction: column;    /* Dens børn (h3, p, btn) stables lodret */
+        flex-grow: 1;              /* VIGTIGT: Får .text-center-mobile til at fylde .card-content */
+        /* Hvis .text-center-mobile klassen også skal centrere tekst på mobil: */
+        /* text-align: left; /* Standard for desktop */
+        /* @media (max-width: DIT_MOBILE_BREAKPOINT) { */
+        /* text-align: center; */
+        /* } */
+    }
+    
+    .card-content .text-center-mobile h3 {
+        margin-top: 0;
+        color: var(--color-hav-blue-deep);
+        margin-bottom: 12px;
+        /* Hvis du har text-align: center på .text-center-mobile, vil denne tekst også centreres */
+    }
+    
+    .card-content .text-center-mobile p {
+        margin-bottom: 12px;
+        font-size: 0.9rem;
+        color: var(--color-text-secondary);
+        flex-grow: 1; /* VIGTIGT: Nu vil p vokse INDENFOR .text-center-mobile og skubbe knappen ned */
+        /* Hvis du har text-align: center på .text-center-mobile, vil denne tekst også centreres */
+    }
+    
+    .card-content .text-center-mobile .btn {
+        margin-top: 15px;
+        align-self: center; /* Justerer knappen til venstre. Skift til 'center' for horisontal centrering. */
+                                 /* Hvis .text-center-mobile har text-align: center, og knappen er inline-block, */
+                                 /* vil den også blive centreret. align-self: center; er mere eksplicit for flex items. */
+    }
+
+
+    .card-grid { grid-template-columns: 1fr; }
+
+    .site-footer .container { grid-template-columns: 1fr; text-align: center; }
+    .footer-column ul { padding-left: 0; }
+}
