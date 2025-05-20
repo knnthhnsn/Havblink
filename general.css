@@ -322,7 +322,7 @@ section.alternate-bg { /* Klasse til sektioner med alternativ baggrund */
 
 .card img {
     width: 100%;
-    height: 210px;
+    height: auto;
     object-fit: cover;
     /* Ingen ekstra border på billedet, da kortet har border */
     border-radius: var(--border-radius) var(--border-radius) 0 0;
