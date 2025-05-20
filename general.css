@@ -1,5 +1,3 @@
-/* css/style.css */
-
 /* ===== Grundlæggende Nulstilling & Variabler ===== */
 *,
 *::before,
@@ -79,11 +77,21 @@ p {
     margin-bottom: 1em;
 }
 
+
 .container {
     width: 90%;
     max-width: 1160px;
     margin-left: auto;
     margin-right: auto;
+    padding: 20px 0; /* Reduceret lidt for at give sektioner mere kontrol */
+}
+
+.container-section{
+    width: 90%;
+    max-width: 1160px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 4rem;
     padding: 20px 0; /* Reduceret lidt for at give sektioner mere kontrol */
 }
 
@@ -194,7 +202,8 @@ section.alternate-bg { /* Klasse til sektioner med alternativ baggrund */
 
 .section-title {
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 4rem;
+    margin-top: 6rem;
 }
 .section-title::after {
     content: '';
@@ -265,7 +274,7 @@ section.alternate-bg { /* Klasse til sektioner med alternativ baggrund */
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-color: rgba(0, 59, 92, 0.65); /* Marineblå overlay */
+    background-color: rgba(0, 59, 92, 0.4); /* Marineblå overlay */
     z-index: 1;
 }
 .hero .container { /* Containeren skal være relativ for z-index */
