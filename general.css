@@ -1,4 +1,3 @@
-/* ===== Grundlæggende Nulstilling & Variabler ===== */
 *,
 *::before,
 *::after {
@@ -486,6 +485,14 @@ section.alternate-bg { /* Klasse til sektioner med alternativ baggrund */
     color: var(--color-text-secondary);
 }
 
+#kyst {
+    background-image: url('images/kyst1.png'); /* Angiver stien til baggrundsbilledet */
+    height: 500px; /* Sætter højden på sektionen. Eller din ønskede højde, f.eks. 100vh */
+    background-size: cover; /* Skalerer billedet til at dække hele elementets flade; dette kan beskære billedet */
+    background-position: center center; /* Centrerer baggrundsbilledet i elementet */
+    background-repeat: no-repeat; /* Forhindrer baggrundsbilledet i at gentage sig, også kendt som fliselægning */
+  }
+
 /* ===== Footer ===== */
 .site-footer {
     background-color: var(--color-hav-blue-deep);
@@ -587,7 +594,7 @@ section.alternate-bg { /* Klasse til sektioner med alternativ baggrund */
     }
 
 
-    .burger-menu { display: block; z-index: 1200; }
+    .burger-menu { display: block; z-index: 5; }
 
     .hero h1 { font-size: clamp(2rem, 7vw, 2.8rem); }
     .hero p { font-size: clamp(0.95rem, 4vw, 1.1rem); }
